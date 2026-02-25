@@ -1,0 +1,21 @@
+name: Mirror to Repo B
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo A
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Mirror to Repo B
+        run: |
+          git remote add mirror https://x-access-token:${{ secrets.MIRROR_TOKEN }}@github.com/abroad82/e-contract.git
+          git push mirror --force
